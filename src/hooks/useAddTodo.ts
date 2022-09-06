@@ -9,12 +9,8 @@ import TodoItem from "types/todo-item";
 export default function useAddTodo() {
     const [todos, setTodos] = useRecoilState(store.todoItems)
 
-    const addTodoToList = useCallback((item: TodoItem) => add(item, todos), [todos])
-    const addTodoToStore = useMemo(() => pipe(createTodo, addTodoToList, setTodos), [addTodoToList, setTodos])
-    const addTodo = (title: string, description: string) => addTodoToStore({
-        title,
-        description
-    })
+    const addCurry = useCallback((item: TodoItem) => add(item, todos), [todos])
+    const addTodo = useMemo(() => pipe(createTodo, addCurry, setTodos), [addCurry, setTodos])
 
     return addTodo
 }

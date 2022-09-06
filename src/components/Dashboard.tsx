@@ -1,4 +1,4 @@
-import { Heading, Container, Divider } from "@chakra-ui/react"
+import { Heading, Container } from "@chakra-ui/react"
 import AddTodo from "components/AddTodo"
 import TodoTabs from "./TodoTabs"
 

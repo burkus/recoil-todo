@@ -13,7 +13,7 @@ export default function AddTodo() {
     const addTodo = useAddTodo()
 
     const onSubmit: SubmitHandler<TodoForm> = (data) => {
-        addTodo(data.title, data.description)
+        addTodo(data)
         reset()
     }
 
