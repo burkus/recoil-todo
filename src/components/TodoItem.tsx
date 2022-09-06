@@ -14,7 +14,6 @@ export default function TodoItem({
     const { toggle, remove } = useTodo(item)
     return (
         <Flex
-
             borderBottomWidth={1}
             borderColor='black'
             padding={1}
@@ -27,13 +26,13 @@ export default function TodoItem({
             >
                 <Checkbox
                     size={'lg'}
-                    checked={complete}
+                    isChecked={complete}
                     onChange={toggle}
                 />
                 <Text fontSize={'large'}>
                     {title}
                 </Text>
-                <Text fontSize={'small'}>
+                <Text fontSize={'smaller'}>
                     {description}
                 </Text>
             </Flex>

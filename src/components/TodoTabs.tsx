@@ -3,6 +3,7 @@ import { useRecoilValue, useRecoilCallback } from "recoil";
 import store from "store";
 import ViewState from "types/view-state";
 import TodoList from "./TodoList";
+import { viewStateDescription } from "lib/app";
 
 export default function TodoTabs() {
     const items = useRecoilValue(store.filteredItems)
@@ -15,18 +16,14 @@ export default function TodoTabs() {
     return (
         <Container>
             <Flex>
-                <Button
-                    variant={getVariant('all')}
-                    onClick={() => handleClick('all')}
-                >
-                    All
-                </Button>
-                <Button variant={getVariant('completed')} onClick={() => handleClick('completed')}>
-                    Completed
-                </Button>
-                <Button variant={getVariant('has-description')} onClick={() => handleClick('has-description')}>
-                    Descriptive
-                </Button>
+                {['all', 'completed', 'has-description'].map((view) => (
+                    <Button
+                        variant={getVariant(view as ViewState)}
+                        onClick={() => handleClick(view as ViewState)}
+                    >
+                        {viewStateDescription[view as ViewState]}
+                    </Button>
+                ))}
             </Flex>
             <TodoList items={items} />
         </Container>
