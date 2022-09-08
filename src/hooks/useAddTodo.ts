@@ -1,16 +1,13 @@
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 
 import { add, createTodo } from 'lib/todo'
 import { pipe } from "lib/app";
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import store from "store";
-import TodoItem from "types/todo-item";
+import { TodoForm } from "types/todo-form";
 
 export default function useAddTodo() {
-    const [todos, setTodos] = useRecoilState(store.todoItems)
+    const setTodos = useSetRecoilState(store.todoItems)
 
-    const addCurry = useCallback((item: TodoItem) => add(item, todos), [todos])
-    const addTodo = useMemo(() => pipe(createTodo, addCurry, setTodos), [addCurry, setTodos])
-
-    return addTodo
+    return useMemo(() => pipe<TodoForm>(createTodo, add, setTodos), [setTodos])
 }
