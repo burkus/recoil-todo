@@ -1,19 +1,33 @@
-import { Heading, Container } from "@chakra-ui/react"
+import { Heading, Container, Flex } from "@chakra-ui/react"
 import AddTodo from "components/AddTodo"
 import TodoTabs from "./TodoTabs"
+import useLocalStorage from "hooks/useLocalStorage"
+import TileContainer from "./TileContainer"
 
 export default function Dashboard() {
+    useLocalStorage()
     return (
         <div>
-            <Heading bg='gray.200' paddingTop={2} paddingLeft={5} paddingBottom={5}>
+            <Heading bg='blue.500' padding={5}>
                 Another Todo App
             </Heading>
-            <Container maxW='2xl' paddingTop={10}>
+            <Flex width='full' paddingTop={10}>
+                <Container centerContent>
+                    <Heading size='lg' pb={5}>
+                        Stonks
+                    </Heading>
+                    <TileContainer />
+                </Container>
                 <Container paddingBottom={3}>
                     <AddTodo />
+                    <Container width='full' paddingTop='3'>
+                        <TodoTabs />
+                    </Container>
                 </Container>
-                <TodoTabs />
-            </Container >
+                <Container>
+                    Moar Stonks
+                </Container>
+            </Flex >
         </div>
     )
 }

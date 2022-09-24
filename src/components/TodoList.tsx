@@ -12,7 +12,7 @@ interface TodoListProps {
 export default function TodoList({ items }: TodoListProps) {
     return (
         <Stack spacing={3}>
-            {items.map((item, index) => <TodoItem key={index} item={item} />)}
+            {items.map(item => <TodoItem key={item.id} item={item} />)}
         </Stack>
     )
 }

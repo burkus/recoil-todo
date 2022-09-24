@@ -2,7 +2,7 @@
 import TodoItem from "types/todo-item";
 
 export const find = (todo: TodoItem, todos: TodoItem[]) =>
-    todos.find(e => e.title === todo.title)
+    todos.find(e => e.id == todo.id)
 
 export const update = (todo: TodoItem) => (todos: TodoItem[]) => {
     const prev = find(todo, todos)
@@ -34,5 +34,6 @@ export const toggleDone = (todo: TodoItem) => {
 export const createTodo = ({ title, description }: Partial<TodoItem>) => ({
     title: title ?? '',
     description: description ?? '',
-    complete: false
+    complete: false,
+    id: window.crypto.randomUUID()
 })

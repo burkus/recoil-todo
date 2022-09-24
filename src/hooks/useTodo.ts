@@ -11,5 +11,5 @@ export default function useTodo(item: TodoItem) {
     return useMemo(() => ({
         remove: () => pipe<TodoItem>(remove, setTodos)(item),
         toggle: () => pipe<TodoItem>(toggleDone, update, setTodos)(item)
-    }), [setTodos])
+    }), [setTodos, item])
 }

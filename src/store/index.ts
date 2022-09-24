@@ -1,10 +1,17 @@
 import { atom, selector } from "recoil";
 import TodoItem from "types/todo-item";
 import ViewState from "types/view-state";
+import { localStorageEffect } from 'lib/localStorage'
 
 const todoItems = atom<TodoItem[]>({
     key: 'TodoItems',
-    default: []
+    default: [],
+    effects: [localStorageEffect('todos')]
+})
+
+const highlightedTodo = atom<string>({
+    key: 'HighlightedTodo',
+    default: ''
 })
 
 const filteredItems = selector<TodoItem[]>({
@@ -28,5 +35,6 @@ const viewState = atom<ViewState>({
 export default {
     todoItems,
     filteredItems,
-    viewState
+    viewState,
+    highlightedTodo
 }
