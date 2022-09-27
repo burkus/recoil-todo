@@ -1,7 +1,9 @@
-import { atom, selector } from "recoil";
+import { atom, selector, selectorFamily } from "recoil";
 import TodoItem from "types/todo-item";
 import ViewState from "types/view-state";
 import { localStorageEffect } from 'lib/localStorage'
+import { getMatch } from "lib/string";
+import tileSlice from './tiles'
 
 const todoItems = atom<TodoItem[]>({
     key: 'TodoItems',
@@ -32,9 +34,21 @@ const viewState = atom<ViewState>({
     default: 'all'
 })
 
+const matchTodos = selectorFamily<TodoItem[], string>({
+    key: 'MatchTodos',
+    get: (match: string) => ({ get }) => {
+        const todos = get(todoItems)
+        if (match.length > 0) return todos
+            .sort((a, b) => getMatch(a.title, match) - getMatch(b.title, match))
+        return []
+    }
+})
+
 export default {
     todoItems,
     filteredItems,
     viewState,
-    highlightedTodo
+    highlightedTodo,
+    matchTodos,
+    tile: tileSlice
 }

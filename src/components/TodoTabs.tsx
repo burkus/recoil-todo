@@ -18,6 +18,7 @@ export default function TodoTabs() {
             <Flex>
                 {['all', 'completed', 'has-description'].map((view) => (
                     <Button
+                        key={view}
                         variant={getVariant(view as ViewState)}
                         onClick={() => handleClick(view as ViewState)}
                     >

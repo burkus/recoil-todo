@@ -1,43 +1,60 @@
-import { Container, Flex, Heading, Text } from '@chakra-ui/react'
+import { Container, Flex, Heading, scaleFadeConfig, Text } from '@chakra-ui/react'
+import store from 'store'
+import { useRef, FC, useState, useCallback } from 'react'
+import { useRecoilState } from 'recoil'
 
 interface TileProps {
-    pair: string
-    o: number
-    c: number
-    h: number
-    l: number
-    v: number
+    id: string
 }
 
-export default function Tile(props: TileProps) {
-    const {
-        pair,
-        v,
-        o
-    } = props
+const Tile: FC<TileProps> = ({ id }) => {
+    const [tileValue, setTileValue] = useRecoilState(store.tile.tiles(id))
+    const renderCount = useRef<number>(0)
+    const [animate, setAnimate] = useState(false)
+    renderCount.current++
+
+    const handleClick = useCallback(() => {
+        setTileValue(prev => prev + 1)
+        setAnimate(true)
+    }, [setAnimate, setTileValue])
 
     return (
         <Container
             borderWidth={2}
             borderRadius={10}
+            borderColor='blackAlpha.100'
             bgColor='gray.300'
             color='black'
             width='120px'
             height='120px'
+            mx={0}
+            transition='linear'
+            transitionDuration='200ms'
+            animation={animate ? 'pop 1s ease-in-out' : ''}
+            onAnimationEnd={() => setAnimate(false)}
         >
-            <Flex w='full' h='full' align='center' direction='column' justify='space-between'>
-                <Heading size='sm' pt={3}>
-                    {pair}
+            <Flex
+                w='full'
+                h='full'
+                align='center'
+                direction='column'
+                justify='space-around'
+                onClick={handleClick}
+            >
+                <Heading fontSize='md' pt={3}>
+                    {id.substring(0, 4)}
                 </Heading>
-                <Flex direction='column' pb={5}>
-                    <Text>
-                        {v.toFixed(2)}
+                <Flex direction='column' pb={3}>
+                    <Text fontSize='xs'>
+                        Value: {tileValue}
                     </Text>
-                    <Text>
-                        {o.toFixed(2)}
+                    <Text fontSize='xs'>
+                        Renders: {renderCount.current}
                     </Text>
                 </Flex>
             </Flex>
         </Container>
     )
 }
+
+export default Tile
