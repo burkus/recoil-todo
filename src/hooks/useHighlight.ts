@@ -2,7 +2,7 @@ import store from 'store'
 import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { useMemo, useCallback } from 'react'
 
-const cssFilter = 'blur(1px)'
+const cssFilter = 'blur(0.5px)'
 
 export default function useHighlight(id: string) {
     const highlightedTodoId = useRecoilValue(store.highlightedTodo)

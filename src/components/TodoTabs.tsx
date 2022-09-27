@@ -1,31 +1,26 @@
-import { Container, Flex, Button } from "@chakra-ui/react";
+import { Container, Tabs, TabList, Tab } from "@chakra-ui/react";
 import { useRecoilValue, useRecoilCallback } from "recoil";
 import store from "store";
 import ViewState from "types/view-state";
 import TodoList from "./TodoList";
-import { viewStateDescription } from "lib/app";
 
 export default function TodoTabs() {
     const items = useRecoilValue(store.filteredItems)
-    const viewState = useRecoilValue(store.viewState)
 
-    const handleClick = useRecoilCallback(({ set }) => (view: ViewState) => set(store.viewState, view))
-
-    const getVariant = (view: ViewState) => viewState === view ? 'solid' : 'ghost'
+    const handleChange = useRecoilCallback(
+        ({ set }) =>
+            (index: number) =>
+                set(store.viewState, ['all', 'completed', 'has-description'][index] as ViewState))
 
     return (
         <Container>
-            <Flex>
-                {['all', 'completed', 'has-description'].map((view) => (
-                    <Button
-                        key={view}
-                        variant={getVariant(view as ViewState)}
-                        onClick={() => handleClick(view as ViewState)}
-                    >
-                        {viewStateDescription[view as ViewState]}
-                    </Button>
-                ))}
-            </Flex>
+            <Tabs onChange={handleChange}>
+                <TabList>
+                    <Tab>All</Tab>
+                    <Tab>Completed</Tab>
+                    <Tab>Has Description</Tab>
+                </TabList>
+            </Tabs>
             <TodoList items={items} />
         </Container>
     )
