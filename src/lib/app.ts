@@ -1,6 +1,6 @@
 import ViewState from "types/view-state"
 
-export const compose = (f: any, g: any) => (x: any) => f(g(x))
+export const compose = <T>(f: any, g: any) => (x: T) => f(g(x))
 
 export const pipe = <T>(...fns: any[]) => (x: T) => fns.reduce((y, f) => f(y), x)
 

@@ -1,22 +1,24 @@
-import { Container, Flex, Heading, scaleFadeConfig, Text } from '@chakra-ui/react'
+import { Container, Flex, Heading, Text } from '@chakra-ui/react'
 import store from 'store'
 import { useRef, FC, useState, useCallback } from 'react'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
+import useTile from 'hooks/useTile'
 
 interface TileProps {
     id: string
 }
 
 const Tile: FC<TileProps> = ({ id }) => {
-    const [tileValue, setTileValue] = useRecoilState(store.tile.tiles(id))
+    const tileValue = useRecoilValue(store.tile.tiles(id))
+    const increment = useTile(id)
     const renderCount = useRef<number>(0)
     const [animate, setAnimate] = useState(false)
     renderCount.current++
 
     const handleClick = useCallback(() => {
-        setTileValue(prev => prev + 1)
+        increment()
         setAnimate(true)
-    }, [setAnimate, setTileValue])
+    }, [setAnimate, increment])
 
     return (
         <Container
@@ -30,8 +32,9 @@ const Tile: FC<TileProps> = ({ id }) => {
             mx={0}
             transition='linear'
             transitionDuration='200ms'
-            animation={animate ? 'pop 1s ease-in-out' : ''}
+            animation={animate ? 'pop 150ms ease-in-out' : ''}
             onAnimationEnd={() => setAnimate(false)}
+            cursor='pointer'
         >
             <Flex
                 w='full'

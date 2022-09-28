@@ -4,6 +4,7 @@ import ViewState from "types/view-state";
 import { localStorageEffect } from 'lib/localStorage'
 import { getMatch } from "lib/string";
 import tileSlice from './tiles'
+import Fuse from 'fuse.js'
 
 const todoItems = atom<TodoItem[]>({
     key: 'TodoItems',
@@ -38,8 +39,10 @@ const matchTodos = selectorFamily<TodoItem[], string>({
     key: 'MatchTodos',
     get: (match: string) => ({ get }) => {
         const todos = get(todoItems)
-        if (match.length > 0) return todos
-            .sort((a, b) => getMatch(a.title, match) - getMatch(b.title, match))
+        const fuse = new Fuse(todos, {
+            keys: ['title', 'description']
+        })
+        if (match.length > 0) return fuse.search(match).map(result => result.item)
         return []
     }
 })

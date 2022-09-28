@@ -1,6 +1,4 @@
 import { Stack } from "@chakra-ui/react";
-import { useRecoilValue } from "recoil";
-import store from "store";
 import TodoItemType from "types/todo-item";
 
 import TodoItem from "./TodoItem";

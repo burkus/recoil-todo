@@ -3,6 +3,7 @@ import AddTodo from "components/AddTodo"
 import TodoTabs from "./TodoTabs"
 import useLocalStorage from "hooks/useLocalStorage"
 import TileContainer from "./TileContainer"
+import Search from "./Search"
 
 export default function Dashboard() {
     useLocalStorage()
@@ -36,7 +37,7 @@ export default function Dashboard() {
                     </Container>
                 </Container>
                 <Container>
-                    Moar Stonks
+                    <Search />
                 </Container>
             </Flex >
         </div>
