@@ -30,8 +30,6 @@ const Tile: FC<TileProps> = ({ id }) => {
             width='120px'
             height='120px'
             mx={0}
-            transition='linear'
-            transitionDuration='200ms'
             animation={animate ? 'pop 150ms ease-in-out' : ''}
             onAnimationEnd={() => setAnimate(false)}
             cursor='pointer'
