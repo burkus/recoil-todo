@@ -2,7 +2,6 @@ import { atom, selector, selectorFamily } from "recoil";
 import TodoItem from "types/todo-item";
 import ViewState from "types/view-state";
 import { localStorageEffect } from 'lib/localStorage'
-import { getMatch } from "lib/string";
 import tileSlice from './tiles'
 import Fuse from 'fuse.js'
 
